@@ -24,6 +24,7 @@ if ($result->num_rows > 0) {
             "status" => "success",
             "user_id" => $user['id'],
             "username" => $user['username'], // Tambahkan username di sini
+            "tanggalBergabung" => $user['created_at'],
             "message" => "Login berhasil"
         ));
     } else {
