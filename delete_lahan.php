@@ -9,12 +9,8 @@ if ($connect->connect_error) {
 
 // Check if HTTP method is DELETE
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    // Ambil data JSON dari body request
-    $json = file_get_contents('php://input');
-    $data = json_decode($json, true);
-
-    // Check if ID parameter exists
-    $id = isset($data['id']) ? intval($data['id']) : null;
+    // Ambil parameter ID dari query string
+    $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 
     if (!empty($id)) {
         // SQL query to delete lahan by ID
