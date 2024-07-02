@@ -2,19 +2,26 @@
 // Sambungkan ke database
 $connect = new mysqli("localhost", "root", "galaxys23", "kuliner", 3306);
 
+// Set header Content-Type JSON
+header('Content-Type: application/json');
+
 // Periksa koneksi
 if ($connect->connect_error) {
-    die("Connection failed: " . $connect->connect_error);
+    die(json_encode(array("status" => "error", "message" => "Connection failed: " . $connect->connect_error)));
 }
 
-// Ambil id_lahan dari request (misalnya dari query string)
+// Ambil id_loading dari request (misalnya dari query string)
 $idLoading = isset($_GET['id_loading']) ? intval($_GET['id_loading']) : 0;
 
-// Periksa apakah id_lahan valid
+// Periksa apakah id_loading valid
 if ($idLoading > 0) {
-    // Ambil data dari tabel 'panen' berdasarkan id_lahan
+    // Ambil data dari tabel 'panen' berdasarkan id_loading
     $sql = "SELECT * FROM panen WHERE id_loading = ?";
     $stmt = $connect->prepare($sql);
+    if ($stmt === false) {
+        die(json_encode(array("status" => "error", "message" => "Failed to prepare statement: " . $connect->error)));
+    }
+    
     $stmt->bind_param("i", $idLoading);
     $stmt->execute();
     $result = $stmt->get_result();
