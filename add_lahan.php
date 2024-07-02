@@ -6,7 +6,6 @@ $connect = new mysqli("localhost", "root", "galaxys23", "kuliner", 3306);
 if ($connect->connect_error) {
     die("Connection failed: " . $connect->connect_error);
 }
-
 // Validasi data POST
 if (!isset($_POST['nama_lahan'], $_POST['lokasi'], $_POST['luas'], $_POST['user_id'])) {
     echo json_encode(array("status" => "error", "message" => "Invalid request"));
